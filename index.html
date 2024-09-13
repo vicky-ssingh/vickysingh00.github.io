@@ -553,7 +553,7 @@
 		</div>
 		<div class="choose animate-box">
 			<h2>Contact</h2>
-			<form action="https://script.google.com/macros/s/AKfycbzJK9yqQbpTFIt_CGpJaN_dQe1hb025p8NUM6gFtmbnCI7GxVrKUSSGdMPSEtEOykyaPQ/exec" method="POST">
+			<form action="https://script.google.com/macros/s/AKfycbzJK9yqQbpTFIt_CGpJaN_dQe1hb025p8NUM6gFtmbnCI7GxVrKUSSGdMPSEtEOykyaPQ/exec" method="POST" id ="myForm">
 				<div class="row form-group">
 					<div class="col-md-6">
 						<input type="text" id="fname" name="fname" class="form-control" placeholder="Your firstname" required>
@@ -583,10 +583,36 @@
 					<input type="submit" value="Send Message" class="btn btn-primary">
 				</div>
 			</form>
-				
 		</div>
 	</div>
 	</div>
+	<script>
+		document.getElementById('myForm').addEventListener('submit', function (event) {
+			event.preventDefault(); // Prevent default form submission
+	
+			const formData = new FormData(this);
+	
+			// Send form data to your Google Apps Script using fetch
+			fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+			  method: 'POST',
+			  body: formData
+			})
+			.then(response => response.json()) // Parse JSON response
+			.then(data => {
+			  if (data.status === 'success') {
+				// Show popup message after successful submission
+				alert(data.message);
+			  } else {
+				// Handle other response statuses
+				alert('There was an issue submitting the form.');
+			  }
+			})
+			.catch(error => {
+			  console.error('Error:', error);
+			  alert('There was an issue submitting the form.');
+			});
+		  });
+	</script>
 	
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up22"></i></a>
